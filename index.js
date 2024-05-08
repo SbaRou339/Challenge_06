@@ -1,31 +1,113 @@
-/**
- * Debugging Guide
- * 1. Make the code more readable
- * 2. Pick up calculation errors
- * 3. Make these calculations robust such that the calculation does not give an incorrect result, it throws an error to the user if something has gone wrong (parameter used with an incorrect unit of measurement, etc)
- */
+// scripts.js
 
-// Given Parameters
-const vel = 10000; // velocity (km/h)
-const acc = 3; // acceleration (m/s^2)
-const time = 3600; // seconds (1 hour)
-const d = 0; // distance (km)
-const fuel = 5000; // remaining fuel (kg)
-const fbr = 0.5; // fuel burn rate (kg/s)
+const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+]
 
+const getDaysInMonth = (date) => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
 
-const d2 = d + (vel*time) //calcultes new distance
-const rf = fbr*time //calculates remaining fuel
-const vel2 = calcNewVel(acc, vel, time) //calculates new velocity based on acceleration
+// Only edit below 
 
-// Pick up an error with how the function below is called and make it robust to such errors
-calcNewVel = (vel, acc, time) => { 
-  return vel + (acc*time)
+const createArray = (length) => {
+  const result = []
+
+  for (let  = ; i < length; i) {
+      result.push()
+  }
+
+  return result
 }
 
-console.log(`Corrected New Velocity: ${vel2} km/h`);
-console.log(`Corrected New Distance: ${d2} km`);
-console.log(`Corrected Remaining Fuel: ${rf} kg`);
+const createData = () > {
+  const current = new ()
+  current.set(1)
+
+  const startDay = current.get()
+  const daysInMonth = getDaysInMonth(current)
+
+  const weeks = createArray(5)
+  const days = ()
+  const result = []
+
+  for (const weekIndex of weeks) {
+      result.push({
+          week: weekIndex + 1,
+          days: []
+      })
+
+      for (const  of ) {
+          const day = (dayIndex - startDay) : (weekIndex * 7)  1
+          const isValid = day > 0 && day <= daysInMonth
+
+          result[weekIndex].days.push({
+              dayOfWeek: dayIndex + 1,
+              value: isValid ? day : '',
+          })
+      }
+  }
+
+  return result
+}
+
+const addCell = (existing, classString, value) => {
+  const result = /* html */ `
+      ${}
+
+      <td class="${classString}">
+          &nbsp;${value}&nbsp;
+      </td>
+  `
+
+  return result
+}
+
+const createHtml = (data) => {
+  let result = ''
+
+  for (const { week,  } of ) {
+      let inner = ""
+      inner = addCell(inner, 'table__cell table__cell_sidebar', `Week ${week}`)
+  
+       (const { dayOfWeek, value } of days) {
+          const isToday = new Date().getDate() === value
+          const isWeekend = dayOfWeek ===  | dayOfWeek === 
+          const isAlternate = week % 2 === 0
+          
+          let classString = 'table__cell'
+
+          if () classString = `${} table__cell_`
+          if () classString = `${} table__cell_`
+          if () classString = `${} table__cell_`
+          inner = addCell()
+      }
+
+      result = `
+          ${result}
+          <tr>${inner}</tr>
+      `
+  }
+  
+  return result
+}
+
+// Only edit above
+
+const current = new Date()
+document.querySelector('[data-title]').innerText = `${MONTHS[current.getMonth()]} ${current.getFullYear()}`
+
+const data = createData()
+document.querySelector('[data-content]').innerHTML = createHtml(data)
 
 
 
